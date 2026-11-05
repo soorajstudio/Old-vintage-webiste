@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Chronicles of Eldoria — Vintage 3D Reliquary & Antiquities</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚔️</text></svg>">
+</head>
+<body>
+
+  <!-- Screen Vignette Overlay -->
+  <div class="screen-vignette"></div>
+
+  <!-- Ornate Vintage Header -->
+  <header class="vintage-header">
+    <div class="header-inner">
+      <a href="#" class="brand-crest">
+        <div class="crest-icon">🛡️</div>
+        <div class="brand-text">
+          <h1>CHRONICLES OF ELDORIA</h1>
+          <span>The Grand Vintage Reliquary & Curio Cabinet</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#hero-stage" class="nav-link active">3D Reliquary</a>
+        <a href="#curio-cabinet" class="nav-link">Curio Cabinet (26)</a>
+        <a href="#forge-studio" class="nav-link">Alchemist's Forge</a>
+        <a href="#chronicles" class="nav-link">Chronicles</a>
+        <a href="#guestbook" class="nav-link">Guestbook</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="btn-sound-toggle" class="btn-sound-toggle" title="Toggle Hearthfire & Arcane Ambience">
+          <span class="sound-indicator"></span>
+          <span id="sound-label">Atmosphere: Off</span>
+          <span>🔥</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Hero 3D Stage -->
+  <main>
+    <section id="hero-stage" class="hero-stage">
+      <!-- 3D Viewport Chamber -->
+      <div class="viewport-chamber">
+        <!-- Corner Ornaments -->
+        <div class="ornament-corner corner-tl"></div>
+        <div class="ornament-corner corner-tr"></div>
+        <div class="ornament-corner corner-bl"></div>
+        <div class="ornament-corner corner-br"></div>
+
+        <!-- Canvas Container -->
+        <div id="canvas-container"></div>
+
+        <!-- Top HUD -->
+        <div class="viewport-top-hud">
+          <div class="active-relic-badge">
+            <div id="hud-relic-rarity" class="relic-badge-rarity" style="color: #e5a93b;">Legendary Artifact</div>
+            <div id="hud-relic-name" class="relic-badge-name">Ironbeard War Hammer</div>
+          </div>
+
+          <div class="hud-tools">
+            <button id="btn-toggle-rotate" class="btn-tool active" title="Toggle Turntable Rotation">🔄</button>
+            <button id="btn-toggle-wireframe" class="btn-tool" title="Toggle Wireframe Blueprint">📐</button>
+            <button id="btn-reset-view" class="btn-tool" title="Recenter & Auto-Focus Camera">🎯</button>
+            <button id="btn-capture-snapshot" class="btn-tool" title="Capture Vintage Daguerreotype Snapshot">📷</button>
+          </div>
+        </div>
+
+        <!-- Bottom HUD -->
+        <div class="viewport-bottom-hud">
+          <!-- Lighting Presets -->
+          <div class="lighting-selector">
+            <button class="light-btn active" data-light="hearth">🔥 Hearthfire</button>
+            <button class="light-btn" data-light="moonlight">🌙 Moonlit</button>
+            <button class="light-btn" data-light="arcane">🔮 Arcane</button>
+            <button class="light-btn" data-light="sunlight">☀️ Sunlit</button>
+          </div>
+
+          <!-- Quick Mesh Stats -->
+          <div class="relic-quick-stats">
+            <span>Size:</span><strong id="hud-relic-size">1.9 MB</strong>
+            <span>Triangles:</span><strong id="hud-relic-tris">--</strong>
+          </div>
+        </div>
+
+        <!-- Loading Screen -->
+        <div id="viewport-loader" class="viewport-loader">
+          <div class="loader-hourglass">⏳</div>
+          <div id="loader-title" class="loader-text">Summoning Antiquity...</div>
+          <div class="progress-bar-container">
+            <div id="progress-bar-fill" class="progress-bar-fill"></div>
+          </div>
+          <div id="loader-status" class="loader-status">Deciphering 3D geometry...</div>
+        </div>
+      </div>
+
+      <!-- Codex Ledger Sidebar -->
+      <aside class="codex-ledger">
+        <div class="ledger-header">
+          <h2 class="ledger-title">CURATOR'S CODEX</h2>
+          <div class="wax-seal-badge" title="Royal Antiquarian Seal">CR</div>
+        </div>
+
+        <div class="ledger-content">
+          <div id="codex-subtitle" class="ledger-subtitle">
+            Forged in the Deep Subterranean Halls of Karak-Drak
+          </div>
+
+          <div id="codex-description" class="ledger-description">
+            <span class="illuminated-letter">A</span>
+            master-crafted dwarven maul balanced for shattering heavy plate armor and enchanted stone barriers alike. Its faceted steel head bears engraved ancestral oaths that resonate with low thunder when struck.
+          </div>
+
+          <!-- Specifications Table -->
+          <table class="spec-table">
+            <tbody>
+              <tr>
+                <td class="spec-label">Origin</td>
+                <td id="spec-origin" class="spec-value">Deepstone Vaults</td>
+              </tr>
+              <tr>
+                <td class="spec-label">Chronicle Era</td>
+                <td id="spec-era" class="spec-value">4th Century of the First Age</td>
+              </tr>
+              <tr>
+                <td class="spec-label">Weight</td>
+                <td id="spec-weight" class="spec-value">18.5 lbs</td>
+              </tr>
+              <tr>
+                <td class="spec-label">Material Composition</td>
+                <td id="spec-material" class="spec-value">Tempered Dwarf-Steel & Hardened Ash</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Stat Meters -->
+          <div class="stat-meters">
+            <div class="stat-row">
+              <div class="stat-info">
+                <span>Durability</span>
+                <span id="stat-val-durability">98%</span>
+              </div>
+              <div class="stat-bar-track">
+                <div id="stat-bar-durability" class="stat-bar-fill" style="width: 98%;"></div>
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-info">
+                <span>Arcane Potency</span>
+                <span id="stat-val-arcane">42%</span>
+              </div>
+              <div class="stat-bar-track">
+                <div id="stat-bar-arcane" class="stat-bar-fill" style="width: 42%;"></div>
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-info">
+                <span>Lethality Rating</span>
+                <span id="stat-val-lethality">94%</span>
+              </div>
+              <div class="stat-bar-track">
+                <div id="stat-bar-lethality" class="stat-bar-fill" style="width: 94%;"></div>
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-info">
+                <span>Masterwork Craftsmanship</span>
+                <span id="stat-val-craft">96%</span>
+              </div>
+              <div class="stat-bar-track">
+                <div id="stat-bar-craft" class="stat-bar-fill" style="width: 96%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Historical Lore Scroll snippet -->
+          <div id="codex-lore" style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-gold-dark); padding-top: 12px;">
+            Legend holds that King Torvald Ironbeard used this hammer during the siege of Blackspire to collapse the outer barbican single-handedly.
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Curio Cabinet Section -->
+    <section id="curio-cabinet" class="section-wrapper">
+      <div class="section-title-banner">
+        <div class="filigree-divider">
+          <div class="filigree-line"></div>
+          <div class="filigree-symbol">❖ ⚔ ❖</div>
+          <div class="filigree-line"></div>
+        </div>
+        <h2 class="section-heading">THE CURIO CABINET</h2>
+        <p class="section-subheading">A Complete Archival Catalog of 26 Rare Antiquities, Armaments & Relics</p>
+      </div>
+
+      <!-- Toolbar: Filters & Search -->
+      <div class="catalog-toolbar">
+        <div class="filter-pills" id="filter-pills">
+          <!-- Dynamically populated -->
+        </div>
+
+        <div class="search-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="catalog-search" class="search-input" placeholder="Search relics, materials, origins...">
+        </div>
+      </div>
+
+      <!-- Relics Grid -->
+      <div class="relics-grid" id="relics-grid">
+        <!-- Dynamically rendered cards -->
+      </div>
+    </section>
+
+    <!-- The Alchemist & Armorer's Forge Section -->
+    <section id="forge-studio" class="section-wrapper">
+      <div class="section-title-banner">
+        <div class="filigree-divider">
+          <div class="filigree-line"></div>
+          <div class="filigree-symbol">✦ ⚒ ✦</div>
+          <div class="filigree-line"></div>
+        </div>
+        <h2 class="section-heading">THE ALCHEMIST'S FORGE</h2>
+        <p class="section-subheading">Interactive Metallurgical Studio & Arcane Enchantment Chamber</p>
+      </div>
+
+      <div class="forge-section">
+        <p style="text-align: center; max-width: 780px; margin: 0 auto; color: var(--text-secondary);">
+          Utilize ancient tools to alter the physical properties of the relic currently resting upon the pedestal. Adjust the oxidation patina, test runic wireframe resonance, or infuse the steel with elemental sorceries.
+        </p>
+
+        <div class="forge-grid">
+          <!-- Patina & Finish -->
+          <div class="forge-card">
+            <h3 class="forge-card-title">⚒ Surface Patina & Weathering</h3>
+            <div class="forge-control-group">
+              <div class="control-label">
+                <span>Roughness / Oxidation</span>
+                <span id="patina-val-display">50%</span>
+              </div>
+              <input type="range" id="slider-patina" class="vintage-slider" min="0" max="1" step="0.05" value="0.5">
+              <small style="color: var(--text-muted); font-size: 0.75rem;">0% = Mirror Polish | 100% = Ancient Weathered Stone</small>
+            </div>
+          </div>
+
+          <!-- Arcane Enchants -->
+          <div class="forge-card">
+            <h3 class="forge-card-title">🔮 Arcane Infusion Tint</h3>
+            <div class="forge-control-group">
+              <span class="control-label">Choose Elemental Tint:</span>
+              <div class="tint-palette" id="tint-palette">
+                <button class="tint-swatch active" data-tint="none" style="background: #888;" title="Natural Relic Tone"></button>
+                <button class="tint-swatch" data-tint="gold" style="background: #ffd700;" title="Dragon Gold Infusion"></button>
+                <button class="tint-swatch" data-tint="ruby" style="background: #ef4444;" title="Blood Ruby Imbue"></button>
+                <button class="tint-swatch" data-tint="emerald" style="background: #10b981;" title="Emerald Toxin"></button>
+                <button class="tint-swatch" data-tint="astral" style="background: #38bdf8;" title="Astral Sapphire Frost"></button>
+                <button class="tint-swatch" data-tint="void" style="background: #a855f7;" title="Void Netherglow"></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Turntable Speed -->
+          <div class="forge-card">
+            <h3 class="forge-card-title">⚙ Pedestal Turntable Speed</h3>
+            <div class="forge-control-group">
+              <div class="control-label">
+                <span>Rotation Velocity</span>
+                <span id="speed-val-display">Standard</span>
+              </div>
+              <input type="range" id="slider-speed" class="vintage-slider" min="0" max="0.04" step="0.002" value="0.008">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chronicles & Lore Section -->
+    <section id="chronicles" class="section-wrapper">
+      <div class="section-title-banner">
+        <div class="filigree-divider">
+          <div class="filigree-line"></div>
+          <div class="filigree-symbol">📜 ⚜ 📜</div>
+          <div class="filigree-line"></div>
+        </div>
+        <h2 class="section-heading">CHRONICLES OF THE REALM</h2>
+        <p class="section-subheading">Field Journals & Archival Excerpts from the Expeditionary Guild</p>
+      </div>
+
+      <div class="chronicles-grid">
+        <div class="parchment-scroll">
+          <h3>The Lost Armory of Karak-Drak</h3>
+          <p>
+            "On the ninth day of the deep winter excavation, our lantern light caught the glint of rune-chiseled steel. Embedded in the petrified basalt of the lower vault sat the Ironbeard War Hammer, unmarred by the collapses that brought low the dwarf kings a millennium ago. We wrapped it in oiled hides, for the runes still pulsed with heat whenever thunder rolled overhead."
+          </p>
+          <div class="scroll-signature">— Master Excavator Brom, 3rd Guild Expedition</div>
+        </div>
+
+        <div class="parchment-scroll">
+          <h3>The Sea-King's Sunken Longship</h3>
+          <p>
+            "Three leagues off the jagged reefs of the northern fjords, the diving bells brought up the round oak shield of Jarl Haakon. Though two hundred winters have passed under saltwater, the raw cowhide and forged iron boss remain steadfast. The bind-runes carved into the wood seem to turn away even sea brine and decay."
+          </p>
+          <div class="scroll-signature">— Captain Laurence, Corsair of the White Gull</div>
+        </div>
+
+        <div class="parchment-scroll">
+          <h3>The Celestial Hermit's Elixirs</h3>
+          <p>
+            "Deep in the moss-draped canopy of Briarwood, we discovered the alchemist's hand-blown phials. Within the glass swirled a midnight-blue fluid containing what could only be described as condensed starlight. When the cork was loosened, a fragrance of alpine frost and dried honeysuckle filled the cavern."
+          </p>
+          <div class="scroll-signature">— Sister Martha, Herbalist of the Order</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Guestbook & Ledger Section -->
+    <section id="guestbook" class="section-wrapper">
+      <div class="section-title-banner">
+        <div class="filigree-divider">
+          <div class="filigree-line"></div>
+          <div class="filigree-symbol">🖋 ⚖ 🖋</div>
+          <div class="filigree-line"></div>
+        </div>
+        <h2 class="section-heading">THE ADVENTURER'S LEDGER</h2>
+        <p class="section-subheading">Inscribe Your Name & Guild in the Royal Visitors' Register</p>
+      </div>
+
+      <div class="guestbook-wrapper">
+        <form id="guestbook-form" class="guestbook-form">
+          <div class="form-group">
+            <label class="form-label" for="gb-name">Your Name / Alias</label>
+            <input type="text" id="gb-name" class="form-input" placeholder="e.g. Sir Cedric the Bold" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="gb-guild">Guild or Allegiance</label>
+            <input type="text" id="gb-guild" class="form-input" placeholder="e.g. Order of the Silver Dawn" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="gb-message">Words for the Archive</label>
+            <input type="text" id="gb-message" class="form-input" placeholder="e.g. Marvelous craftsmanship on the war hammer!" required>
+          </div>
+
+          <button type="submit" class="btn-sign">Seal & Sign 🔏</button>
+        </form>
+
+        <div class="guestbook-entries" id="guestbook-entries">
+          <!-- Dynamically populated entries -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Ornate Footer -->
+  <footer class="vintage-footer">
+    <div class="footer-content">
+      <div class="crest-icon" style="width: 42px; height: 42px; font-size: 20px;">🛡️</div>
+      <div class="footer-logo">THE GRAND CHRONICLES OF ELDORIA</div>
+      <p class="footer-text">
+        An immersive vintage 3D showcase exhibiting 26 mastercrafted artifacts, armaments, and architectural relics. Powered by WebGL, Three.js, and procedural soundscapes.
+      </p>
+      <div style="color: var(--border-brass); font-size: 0.8rem; font-family: var(--font-medieval); margin-top: 12px;">
+        All 3D assets loaded directly from the antiquarian repository. Hand-curated with reverence.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lore Modal Dialog -->
+  <div id="lore-modal" class="modal-overlay">
+    <div class="modal-card">
+      <button id="modal-close" class="modal-close">&times;</button>
+      <div class="card-category" id="modal-category" style="margin-bottom: 8px;">⚔️ Weapons & Armory</div>
+      <h3 id="modal-title" style="font-family: var(--font-decorative); color: var(--gold-highlight); font-size: 1.5rem; margin-bottom: 4px;"></h3>
+      <div id="modal-subtitle" style="font-family: var(--font-medieval); color: var(--border-gold); font-style: italic; margin-bottom: 16px;"></div>
+
+      <div id="modal-lore-body" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-primary); margin-bottom: 20px;"></div>
+
+      <div style="display: flex; gap: 12px; justify-content: flex-end;">
+        <button id="modal-inspect-btn" class="btn-sign" style="height: auto; padding: 8px 20px;">Inspect in 3D ⚔️</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
