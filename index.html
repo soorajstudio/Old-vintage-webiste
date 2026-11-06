@@ -38,8 +38,8 @@
       </a>
 
       <nav class="nav-links">
-        <a href="#hero-stage" class="nav-link active">3D Reliquary</a>
-        <a href="#curio-cabinet" class="nav-link">Curio Cabinet (26)</a>
+        <a href="#hero-stage" class="nav-link active">3D Showcase</a>
+        <a href="#curio-cabinet" class="nav-link">Curio Cabinet</a>
         <a href="#forge-studio" class="nav-link">Alchemist's Forge</a>
         <a href="#chronicles" class="nav-link">Chronicles</a>
         <a href="#guestbook" class="nav-link">Guestbook</a>
@@ -55,154 +55,214 @@
     </div>
   </header>
 
-  <!-- Main Hero 3D Stage -->
+  <!-- Main Hero 3D Stage (Game Character / Relic Selection Experience) -->
   <main>
-    <section id="hero-stage" class="hero-stage">
-      <!-- 3D Viewport Chamber -->
-      <div class="viewport-chamber">
-        <!-- Corner Ornaments -->
-        <div class="ornament-corner corner-tl"></div>
-        <div class="ornament-corner corner-tr"></div>
-        <div class="ornament-corner corner-bl"></div>
-        <div class="ornament-corner corner-br"></div>
+    <section id="hero-stage" class="hero-stage-container">
+      
+      <!-- Top Half: 3D Viewport in Middle + Curator's Codex Details Sidebar -->
+      <div class="hero-stage-main">
+        <!-- 3D Viewport Chamber -->
+        <div class="viewport-chamber">
+          <!-- Corner Ornaments -->
+          <div class="ornament-corner corner-tl"></div>
+          <div class="ornament-corner corner-tr"></div>
+          <div class="ornament-corner corner-bl"></div>
+          <div class="ornament-corner corner-br"></div>
 
-        <!-- Canvas Container -->
-        <div id="canvas-container"></div>
+          <!-- Canvas Container -->
+          <div id="canvas-container"></div>
 
-        <!-- Top HUD -->
-        <div class="viewport-top-hud">
-          <div class="active-relic-badge">
-            <div id="hud-relic-rarity" class="relic-badge-rarity" style="color: #e5a93b;">Legendary Artifact</div>
-            <div id="hud-relic-name" class="relic-badge-name">Ironbeard War Hammer</div>
+          <!-- Game-Style Left & Right Navigation Arrows -->
+          <button id="nav-arrow-prev" class="game-nav-arrow arrow-left" title="Previous Antiquity (Left Arrow Key)">
+            <span class="arrow-symbol">‹</span>
+            <span class="arrow-label">PREV</span>
+          </button>
+          <button id="nav-arrow-next" class="game-nav-arrow arrow-right" title="Next Antiquity (Right Arrow Key)">
+            <span class="arrow-symbol">›</span>
+            <span class="arrow-label">NEXT</span>
+          </button>
+
+          <!-- Top HUD -->
+          <div class="viewport-top-hud">
+            <div class="active-relic-badge">
+              <div id="hud-relic-rarity" class="relic-badge-rarity" style="color: #e5a93b;">Legendary Artifact</div>
+              <div id="hud-relic-name" class="relic-badge-name">Ironbeard War Hammer</div>
+            </div>
+
+            <!-- Relic Index Counter (e.g. 01 / 26) -->
+            <div id="relic-index-counter" class="relic-index-counter">
+              <span class="counter-flourish">❖</span>
+              <span id="counter-current">01</span> / <span id="counter-total">26</span>
+              <span class="counter-flourish">❖</span>
+            </div>
+
+            <div class="hud-tools">
+              <button id="btn-toggle-rotate" class="btn-tool active" title="Toggle Turntable Rotation">🔄</button>
+              <button id="btn-toggle-wireframe" class="btn-tool" title="Toggle Wireframe Blueprint">📐</button>
+              <button id="btn-reset-view" class="btn-tool" title="Recenter & Auto-Focus Camera">🎯</button>
+              <button id="btn-capture-snapshot" class="btn-tool" title="Capture Vintage Daguerreotype Snapshot">📷</button>
+            </div>
           </div>
 
-          <div class="hud-tools">
-            <button id="btn-toggle-rotate" class="btn-tool active" title="Toggle Turntable Rotation">🔄</button>
-            <button id="btn-toggle-wireframe" class="btn-tool" title="Toggle Wireframe Blueprint">📐</button>
-            <button id="btn-reset-view" class="btn-tool" title="Recenter & Auto-Focus Camera">🎯</button>
-            <button id="btn-capture-snapshot" class="btn-tool" title="Capture Vintage Daguerreotype Snapshot">📷</button>
+          <!-- Bottom HUD -->
+          <div class="viewport-bottom-hud">
+            <!-- Lighting Presets -->
+            <div class="lighting-selector">
+              <button class="light-btn active" data-light="hearth">🔥 Hearthfire</button>
+              <button class="light-btn" data-light="moonlight">🌙 Moonlit</button>
+              <button class="light-btn" data-light="arcane">🔮 Arcane</button>
+              <button class="light-btn" data-light="sunlight">☀️ Sunlit</button>
+            </div>
+
+            <!-- Quick Mesh Stats -->
+            <div class="relic-quick-stats">
+              <span>Size:</span><strong id="hud-relic-size">1.9 MB</strong>
+              <span>Triangles:</span><strong id="hud-relic-tris">--</strong>
+            </div>
+          </div>
+
+          <!-- Loading Screen -->
+          <div id="viewport-loader" class="viewport-loader">
+            <div class="loader-hourglass">⏳</div>
+            <div id="loader-title" class="loader-text">Summoning Antiquity...</div>
+            <div class="progress-bar-container">
+              <div id="progress-bar-fill" class="progress-bar-fill"></div>
+            </div>
+            <div id="loader-status" class="loader-status">Deciphering 3D geometry...</div>
           </div>
         </div>
 
-        <!-- Bottom HUD -->
-        <div class="viewport-bottom-hud">
-          <!-- Lighting Presets -->
-          <div class="lighting-selector">
-            <button class="light-btn active" data-light="hearth">🔥 Hearthfire</button>
-            <button class="light-btn" data-light="moonlight">🌙 Moonlit</button>
-            <button class="light-btn" data-light="arcane">🔮 Arcane</button>
-            <button class="light-btn" data-light="sunlight">☀️ Sunlit</button>
+        <!-- Codex Ledger Sidebar (Details & Download Option) -->
+        <aside class="codex-ledger">
+          <div class="ledger-header">
+            <h2 class="ledger-title">CURATOR'S CODEX</h2>
+            <div class="wax-seal-badge" title="Royal Antiquarian Seal">CR</div>
           </div>
 
-          <!-- Quick Mesh Stats -->
-          <div class="relic-quick-stats">
-            <span>Size:</span><strong id="hud-relic-size">1.9 MB</strong>
-            <span>Triangles:</span><strong id="hud-relic-tris">--</strong>
+          <div class="ledger-content">
+            <div id="codex-subtitle" class="ledger-subtitle">
+              Forged in the Deep Subterranean Halls of Karak-Drak
+            </div>
+
+            <!-- Download 3D Model Option Button -->
+            <a id="btn-download-glb" class="btn-download-relic" href="./pixellabs-warhammer-3626.glb" download="pixellabs-warhammer-3626.glb" title="Download the 3D model asset">
+              <div class="download-left">
+                <span class="download-icon">📥</span>
+              </div>
+              <div class="download-mid">
+                <span class="download-title">DOWNLOAD 3D MODEL</span>
+                <span id="download-file-info" class="download-sub">Binary glTF (.GLB) • 1.9 MB</span>
+              </div>
+              <div class="download-right">
+                <span class="download-badge">FREE .GLB</span>
+              </div>
+            </a>
+
+            <div id="codex-description" class="ledger-description">
+              <span class="illuminated-letter">A</span>
+              master-crafted dwarven maul balanced for shattering heavy plate armor and enchanted stone barriers alike. Its faceted steel head bears engraved ancestral oaths that resonate with low thunder when struck.
+            </div>
+
+            <!-- Specifications Table -->
+            <table class="spec-table">
+              <tbody>
+                <tr>
+                  <td class="spec-label">Origin</td>
+                  <td id="spec-origin" class="spec-value">Deepstone Vaults</td>
+                </tr>
+                <tr>
+                  <td class="spec-label">Chronicle Era</td>
+                  <td id="spec-era" class="spec-value">4th Century of the First Age</td>
+                </tr>
+                <tr>
+                  <td class="spec-label">Weight</td>
+                  <td id="spec-weight" class="spec-value">18.5 lbs</td>
+                </tr>
+                <tr>
+                  <td class="spec-label">Material Composition</td>
+                  <td id="spec-material" class="spec-value">Tempered Dwarf-Steel & Hardened Ash</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Stat Meters -->
+            <div class="stat-meters">
+              <div class="stat-row">
+                <div class="stat-info">
+                  <span>Durability</span>
+                  <span id="stat-val-durability">98%</span>
+                </div>
+                <div class="stat-bar-track">
+                  <div id="stat-bar-durability" class="stat-bar-fill" style="width: 98%;"></div>
+                </div>
+              </div>
+
+              <div class="stat-row">
+                <div class="stat-info">
+                  <span>Arcane Potency</span>
+                  <span id="stat-val-arcane">42%</span>
+                </div>
+                <div class="stat-bar-track">
+                  <div id="stat-bar-arcane" class="stat-bar-fill" style="width: 42%;"></div>
+                </div>
+              </div>
+
+              <div class="stat-row">
+                <div class="stat-info">
+                  <span>Lethality Rating</span>
+                  <span id="stat-val-lethality">94%</span>
+                </div>
+                <div class="stat-bar-track">
+                  <div id="stat-bar-lethality" class="stat-bar-fill" style="width: 94%;"></div>
+                </div>
+              </div>
+
+              <div class="stat-row">
+                <div class="stat-info">
+                  <span>Masterwork Craftsmanship</span>
+                  <span id="stat-val-craft">96%</span>
+                </div>
+                <div class="stat-bar-track">
+                  <div id="stat-bar-craft" class="stat-bar-fill" style="width: 96%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Historical Lore Scroll snippet -->
+            <div id="codex-lore" style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-gold-dark); padding-top: 12px;">
+              Legend holds that King Torvald Ironbeard used this hammer during the siege of Blackspire to collapse the outer barbican single-handedly.
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Bottom Half: Character Selection Deck with Square Boxes + Previews -->
+      <div class="character-deck-panel">
+        <div class="deck-header">
+          <div class="deck-title-group">
+            <span class="deck-icon">🏺</span>
+            <h3 class="deck-title">SELECT ANTIQUITY</h3>
+            <span class="deck-counter-badge" id="deck-count-badge">26 Relics</span>
+            <span class="deck-hint">◀ Click or use Arrow Keys to navigate ▶</span>
+          </div>
+
+          <div class="deck-controls">
+            <button id="deck-scroll-left" class="btn-deck-scroll" title="Scroll Deck Left">‹</button>
+            <button id="deck-scroll-right" class="btn-deck-scroll" title="Scroll Deck Right">›</button>
           </div>
         </div>
 
-        <!-- Loading Screen -->
-        <div id="viewport-loader" class="viewport-loader">
-          <div class="loader-hourglass">⏳</div>
-          <div id="loader-title" class="loader-text">Summoning Antiquity...</div>
-          <div class="progress-bar-container">
-            <div id="progress-bar-fill" class="progress-bar-fill"></div>
+        <!-- Square Thumbnail Carousel Deck -->
+        <div class="square-deck-wrapper">
+          <div id="square-relics-deck" class="square-relics-deck">
+            <!-- Dynamically populated with 26 square boxes containing preview image and name -->
           </div>
-          <div id="loader-status" class="loader-status">Deciphering 3D geometry...</div>
         </div>
       </div>
 
-      <!-- Codex Ledger Sidebar -->
-      <aside class="codex-ledger">
-        <div class="ledger-header">
-          <h2 class="ledger-title">CURATOR'S CODEX</h2>
-          <div class="wax-seal-badge" title="Royal Antiquarian Seal">CR</div>
-        </div>
-
-        <div class="ledger-content">
-          <div id="codex-subtitle" class="ledger-subtitle">
-            Forged in the Deep Subterranean Halls of Karak-Drak
-          </div>
-
-          <div id="codex-description" class="ledger-description">
-            <span class="illuminated-letter">A</span>
-            master-crafted dwarven maul balanced for shattering heavy plate armor and enchanted stone barriers alike. Its faceted steel head bears engraved ancestral oaths that resonate with low thunder when struck.
-          </div>
-
-          <!-- Specifications Table -->
-          <table class="spec-table">
-            <tbody>
-              <tr>
-                <td class="spec-label">Origin</td>
-                <td id="spec-origin" class="spec-value">Deepstone Vaults</td>
-              </tr>
-              <tr>
-                <td class="spec-label">Chronicle Era</td>
-                <td id="spec-era" class="spec-value">4th Century of the First Age</td>
-              </tr>
-              <tr>
-                <td class="spec-label">Weight</td>
-                <td id="spec-weight" class="spec-value">18.5 lbs</td>
-              </tr>
-              <tr>
-                <td class="spec-label">Material Composition</td>
-                <td id="spec-material" class="spec-value">Tempered Dwarf-Steel & Hardened Ash</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- Stat Meters -->
-          <div class="stat-meters">
-            <div class="stat-row">
-              <div class="stat-info">
-                <span>Durability</span>
-                <span id="stat-val-durability">98%</span>
-              </div>
-              <div class="stat-bar-track">
-                <div id="stat-bar-durability" class="stat-bar-fill" style="width: 98%;"></div>
-              </div>
-            </div>
-
-            <div class="stat-row">
-              <div class="stat-info">
-                <span>Arcane Potency</span>
-                <span id="stat-val-arcane">42%</span>
-              </div>
-              <div class="stat-bar-track">
-                <div id="stat-bar-arcane" class="stat-bar-fill" style="width: 42%;"></div>
-              </div>
-            </div>
-
-            <div class="stat-row">
-              <div class="stat-info">
-                <span>Lethality Rating</span>
-                <span id="stat-val-lethality">94%</span>
-              </div>
-              <div class="stat-bar-track">
-                <div id="stat-bar-lethality" class="stat-bar-fill" style="width: 94%;"></div>
-              </div>
-            </div>
-
-            <div class="stat-row">
-              <div class="stat-info">
-                <span>Masterwork Craftsmanship</span>
-                <span id="stat-val-craft">96%</span>
-              </div>
-              <div class="stat-bar-track">
-                <div id="stat-bar-craft" class="stat-bar-fill" style="width: 96%;"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Historical Lore Scroll snippet -->
-          <div id="codex-lore" style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-gold-dark); padding-top: 12px;">
-            Legend holds that King Torvald Ironbeard used this hammer during the siege of Blackspire to collapse the outer barbican single-handedly.
-          </div>
-        </div>
-      </aside>
     </section>
 
-    <!-- Curio Cabinet Section -->
+    <!-- Curio Cabinet Section (Complete Catalog Grid) -->
     <section id="curio-cabinet" class="section-wrapper">
       <div class="section-title-banner">
         <div class="filigree-divider">
@@ -211,7 +271,7 @@
           <div class="filigree-line"></div>
         </div>
         <h2 class="section-heading">THE CURIO CABINET</h2>
-        <p class="section-subheading">A Complete Archival Catalog of 26 Rare Antiquities, Armaments & Relics</p>
+        <p class="section-subheading">Complete Archival Catalog of 26 Rare Antiquities with Direct 3D Downloads</p>
       </div>
 
       <!-- Toolbar: Filters & Search -->
@@ -228,7 +288,7 @@
 
       <!-- Relics Grid -->
       <div class="relics-grid" id="relics-grid">
-        <!-- Dynamically rendered cards -->
+        <!-- Dynamically rendered cards with image preview and download option -->
       </div>
     </section>
 
@@ -381,7 +441,7 @@
         An immersive vintage 3D showcase exhibiting 26 mastercrafted artifacts, armaments, and architectural relics. Powered by WebGL, Three.js, and procedural soundscapes.
       </p>
       <div style="color: var(--border-brass); font-size: 0.8rem; font-family: var(--font-medieval); margin-top: 12px;">
-        All 3D assets loaded directly from the antiquarian repository. Hand-curated with reverence.
+        All 3D models available for direct download. Hand-curated with reverence.
       </div>
     </div>
   </footer>
@@ -396,8 +456,11 @@
 
       <div id="modal-lore-body" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-primary); margin-bottom: 20px;"></div>
 
-      <div style="display: flex; gap: 12px; justify-content: flex-end;">
-        <button id="modal-inspect-btn" class="btn-sign" style="height: auto; padding: 8px 20px;">Inspect in 3D ⚔️</button>
+      <div style="display: flex; gap: 12px; justify-content: flex-end; align-items: center;">
+        <a id="modal-download-btn" class="btn-download-modal" href="#" download="#">
+          <span>📥 Download 3D Asset</span>
+        </a>
+        <button id="modal-inspect-btn" class="btn-sign" style="height: auto; padding: 10px 20px;">Inspect in 3D ⚔️</button>
       </div>
     </div>
   </div>

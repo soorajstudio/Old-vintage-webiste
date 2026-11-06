@@ -205,15 +205,21 @@ body {
   box-shadow: 0 0 8px #10b981;
 }
 
-/* Hero Section: The Grand 3D Stage */
-.hero-stage {
+/* Hero Section: The Grand 3D Stage & Character Selection Deck */
+.hero-stage-container {
   max-width: 1440px;
-  margin: 20px auto 40px;
+  margin: 16px auto 40px;
   padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero-stage-main {
   display: grid;
   grid-template-columns: 1fr 420px;
   gap: 24px;
-  min-height: 680px;
+  min-height: 640px;
 }
 
 /* 3D Viewport Chamber */
@@ -237,6 +243,97 @@ body {
 
 #canvas-container:active {
   cursor: grabbing;
+}
+
+/* Game-Style Left & Right Navigation Arrows */
+.game-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 25;
+  background: rgba(22, 16, 12, 0.85);
+  border: 2px solid var(--border-brass);
+  color: var(--gold-highlight);
+  width: 52px;
+  height: 80px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.8), 0 0 10px var(--gold-glow);
+  outline: none;
+}
+
+.game-nav-arrow.arrow-left {
+  left: 18px;
+}
+
+.game-nav-arrow.arrow-right {
+  right: 18px;
+}
+
+.game-nav-arrow:hover {
+  background: rgba(45, 32, 23, 0.95);
+  border-color: var(--gold-highlight);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(245, 213, 122, 0.5), 0 6px 25px rgba(0,0,0,0.9);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.game-nav-arrow:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.arrow-symbol {
+  font-size: 32px;
+  line-height: 1;
+  font-family: var(--font-decorative);
+  text-shadow: 0 0 8px var(--gold-highlight);
+}
+
+.arrow-label {
+  font-family: var(--font-serif);
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.game-nav-arrow:hover .arrow-label {
+  color: var(--gold-highlight);
+}
+
+/* Relic Index Counter */
+.relic-index-counter {
+  background: rgba(18, 13, 10, 0.85);
+  border: 1px solid var(--border-brass);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(8px);
+  pointer-events: auto;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.relic-index-counter span#counter-current {
+  color: var(--gold-highlight);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.counter-flourish {
+  color: var(--border-gold);
+  font-size: 0.7rem;
 }
 
 /* Ornate Corner Accents */
@@ -1233,4 +1330,405 @@ body {
   .guestbook-form {
     grid-template-columns: 1fr;
   }
+}
+
+/* ==========================================================
+   PROMINENT 3D MODEL DOWNLOAD BUTTON & CHARACTER SELECTION DECK
+   ========================================================== */
+
+/* Prominent 3D Model Download Button in Codex Ledger */
+.btn-download-relic {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: linear-gradient(135deg, #2b1f17 0%, #17110e 100%);
+  border: 2px solid var(--border-gold);
+  border-radius: 6px;
+  padding: 10px 14px;
+  text-decoration: none;
+  color: var(--text-primary);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), inset 0 0 12px rgba(197, 160, 89, 0.15);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  margin: 6px 0;
+}
+
+.btn-download-relic::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(245, 213, 122, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.btn-download-relic:hover::before {
+  left: 100%;
+}
+
+.btn-download-relic:hover {
+  border-color: var(--gold-highlight);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8), 0 0 16px var(--gold-glow);
+  background: linear-gradient(135deg, #38281d 0%, #201712 100%);
+}
+
+.download-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.download-icon {
+  font-size: 24px;
+  filter: drop-shadow(0 0 4px rgba(245, 213, 122, 0.6));
+}
+
+.download-mid {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.download-title {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--gold-highlight);
+  letter-spacing: 1px;
+}
+
+.download-sub {
+  font-family: var(--font-medieval);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.download-right {
+  display: flex;
+  align-items: center;
+}
+
+.download-badge {
+  background: var(--border-gold-dark);
+  color: var(--gold-highlight);
+  font-family: var(--font-serif);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-gold);
+  letter-spacing: 1px;
+}
+
+/* Bottom Game-Style Character / Relic Selection Deck */
+.character-deck-panel {
+  background: var(--bg-panel);
+  border: 2px solid var(--border-gold);
+  border-radius: 8px;
+  padding: 16px 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.deck-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-gold-dark);
+  padding-bottom: 10px;
+}
+
+.deck-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.deck-icon {
+  font-size: 20px;
+}
+
+.deck-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--gold-highlight);
+  letter-spacing: 1.5px;
+}
+
+.deck-counter-badge {
+  background: #110d0a;
+  border: 1px solid var(--border-brass);
+  color: var(--text-secondary);
+  font-family: var(--font-medieval);
+  font-size: 0.8rem;
+  padding: 2px 10px;
+  border-radius: 12px;
+}
+
+.deck-hint {
+  font-family: var(--font-medieval);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.deck-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-deck-scroll {
+  background: #251b14;
+  border: 1px solid var(--border-brass);
+  color: var(--gold-highlight);
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-deck-scroll:hover {
+  background: #38281d;
+  border-color: var(--border-gold);
+  transform: scale(1.08);
+  box-shadow: 0 0 10px var(--gold-glow);
+}
+
+.square-deck-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 8px 4px 12px;
+  scroll-behavior: smooth;
+}
+
+.square-relics-deck {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+}
+
+/* Individual Square Box Card */
+.square-relic-card {
+  width: 140px;
+  height: 160px;
+  flex-shrink: 0;
+  background: #18110d;
+  border: 2px solid var(--border-gold-dark);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  user-select: none;
+  overflow: hidden;
+}
+
+.square-relic-card:hover {
+  transform: translateY(-5px) scale(1.03);
+  border-color: var(--border-gold);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8), 0 0 14px var(--gold-glow);
+  background: #261b14;
+}
+
+.square-relic-card.active {
+  border: 2px solid var(--gold-highlight);
+  background: #2d1f16;
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 0 20px rgba(245, 213, 122, 0.5), 0 8px 25px rgba(0, 0, 0, 0.9);
+}
+
+.square-card-frame {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.square-card-img-box {
+  width: 100%;
+  height: 106px;
+  background: radial-gradient(circle at center, #271c16 0%, #120d09 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.square-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.square-relic-card:hover .square-card-img,
+.square-relic-card.active .square-card-img {
+  transform: scale(1.08);
+}
+
+.square-card-rarity-pip {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.8);
+  box-shadow: 0 0 6px currentColor;
+  z-index: 5;
+}
+
+.square-card-meta {
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  background: linear-gradient(180deg, #1f1611 0%, #110d08 100%);
+  border-top: 1px solid var(--border-gold-dark);
+}
+
+.square-card-name {
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.square-relic-card.active .square-card-name {
+  color: var(--gold-highlight);
+  font-weight: 700;
+}
+
+.square-card-size {
+  font-family: var(--font-medieval);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2px;
+}
+
+.square-active-indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--border-gold);
+  color: #110d0a;
+  font-family: var(--font-serif);
+  font-size: 0.55rem;
+  font-weight: 900;
+  padding: 1px 6px;
+  border-bottom-left-radius: 4px;
+  letter-spacing: 1px;
+  display: none;
+  z-index: 10;
+}
+
+.square-relic-card.active .square-active-indicator {
+  display: block;
+}
+
+/* Corner filigree notches on square card */
+.sq-corner {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+.sq-tl { top: 2px; left: 2px; border-top: 1px solid var(--border-gold); border-left: 1px solid var(--border-gold); }
+.sq-tr { top: 2px; right: 2px; border-top: 1px solid var(--border-gold); border-right: 1px solid var(--border-gold); }
+.sq-bl { bottom: 2px; left: 2px; border-bottom: 1px solid var(--border-gold); border-left: 1px solid var(--border-gold); }
+.sq-br { bottom: 2px; right: 2px; border-bottom: 1px solid var(--border-gold); border-right: 1px solid var(--border-gold); }
+
+.square-relic-card.active .sq-corner {
+  border-color: var(--gold-highlight);
+  opacity: 1;
+}
+
+/* Curio Cabinet Cards with Thumbnail Previews */
+.card-thumb-wrapper {
+  width: 100%;
+  height: 170px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  border: 1px solid var(--border-gold-dark);
+  background: radial-gradient(circle at center, #271c16 0%, #120d09 100%);
+  position: relative;
+}
+
+.card-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.relic-card:hover .card-thumb-img {
+  transform: scale(1.06);
+}
+
+.btn-card-download {
+  background: #1e1611;
+  border: 1px solid var(--border-brass);
+  color: var(--gold-highlight);
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  text-decoration: none;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.btn-card-download:hover {
+  background: #332318;
+  border-color: var(--border-gold);
+  transform: scale(1.08);
+  box-shadow: 0 0 10px var(--gold-glow);
+}
+
+.btn-download-modal {
+  background: linear-gradient(135deg, #38281d 0%, #201712 100%);
+  border: 1px solid var(--border-gold);
+  color: var(--gold-highlight);
+  padding: 10px 18px;
+  border-radius: 4px;
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.btn-download-modal:hover {
+  background: linear-gradient(135deg, #4d3727 0%, #2b1f17 100%);
+  border-color: var(--gold-highlight);
+  box-shadow: 0 0 12px var(--gold-glow);
 }

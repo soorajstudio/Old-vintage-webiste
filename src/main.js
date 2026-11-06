@@ -3,6 +3,7 @@ import { Reliquary3DViewer } from './viewer3d.js';
 import { vintageAudio } from './audioEngine.js';
 
 // Application State
+let currentRelicIndex = 0;
 let currentActiveRelic = RELICS_DATA[0];
 let activeCategoryFilter = 'all';
 let searchQuery = '';
@@ -18,6 +19,14 @@ const hudRelicName = document.getElementById('hud-relic-name');
 const hudRelicRarity = document.getElementById('hud-relic-rarity');
 const hudRelicSize = document.getElementById('hud-relic-size');
 const hudRelicTris = document.getElementById('hud-relic-tris');
+const counterCurrent = document.getElementById('counter-current');
+const counterTotal = document.getElementById('counter-total');
+
+const navArrowPrev = document.getElementById('nav-arrow-prev');
+const navArrowNext = document.getElementById('nav-arrow-next');
+
+const btnDownloadGlb = document.getElementById('btn-download-glb');
+const downloadFileInfo = document.getElementById('download-file-info');
 
 const codexSubtitle = document.getElementById('codex-subtitle');
 const codexDescription = document.getElementById('codex-description');
@@ -35,6 +44,11 @@ const statValLethality = document.getElementById('stat-val-lethality');
 const statBarLethality = document.getElementById('stat-bar-lethality');
 const statValCraft = document.getElementById('stat-val-craft');
 const statBarCraft = document.getElementById('stat-bar-craft');
+
+const squareRelicsDeck = document.getElementById('square-relics-deck');
+const deckScrollLeft = document.getElementById('deck-scroll-left');
+const deckScrollRight = document.getElementById('deck-scroll-right');
+const deckCountBadge = document.getElementById('deck-count-badge');
 
 const relicsGrid = document.getElementById('relics-grid');
 const filterPillsContainer = document.getElementById('filter-pills');
@@ -61,6 +75,7 @@ const modalCategory = document.getElementById('modal-category');
 const modalSubtitle = document.getElementById('modal-subtitle');
 const modalLoreBody = document.getElementById('modal-lore-body');
 const modalInspectBtn = document.getElementById('modal-inspect-btn');
+const modalDownloadBtn = document.getElementById('modal-download-btn');
 let modalSelectedRelic = null;
 
 const guestbookForm = document.getElementById('guestbook-form');
@@ -68,9 +83,15 @@ const guestbookEntriesContainer = document.getElementById('guestbook-entries');
 
 // Initialize Application
 function initApp() {
+  if (counterTotal) {
+    counterTotal.textContent = String(RELICS_DATA.length).padStart(2, '0');
+  }
+
   init3DViewer();
+  renderSquareDeck();
   renderFilterPills();
   renderRelicsGrid();
+  setupNavigationArrows();
   setupHUDControls();
   setupForgeControls();
   setupAudioToggle();
@@ -105,8 +126,10 @@ function init3DViewer() {
 }
 
 // Select & Display Relic
-function selectRelic(relic, scrollToTop = true) {
+function selectRelic(relic, scrollToTop = false) {
   currentActiveRelic = relic;
+  currentRelicIndex = RELICS_DATA.findIndex(r => r.id === relic.id);
+  if (currentRelicIndex === -1) currentRelicIndex = 0;
 
   // Show loading indicator
   loaderEl.classList.remove('hidden');
@@ -120,6 +143,20 @@ function selectRelic(relic, scrollToTop = true) {
   hudRelicRarity.style.color = relic.rarityColor;
   hudRelicSize.textContent = relic.fileSize;
   hudRelicTris.textContent = relic.polycount ? relic.polycount.toLocaleString() : 'Measuring...';
+
+  if (counterCurrent) {
+    counterCurrent.textContent = String(currentRelicIndex + 1).padStart(2, '0');
+  }
+
+  // Update Download 3D Model Button
+  if (btnDownloadGlb) {
+    const fileUrl = new URL(relic.file, window.location.href).href;
+    btnDownloadGlb.href = fileUrl;
+    btnDownloadGlb.setAttribute('download', relic.file);
+    if (downloadFileInfo) {
+      downloadFileInfo.textContent = `Binary glTF (.GLB) • ${relic.fileSize}`;
+    }
+  }
 
   // Update Codex Ledger
   codexSubtitle.textContent = relic.subtitle;
@@ -149,7 +186,7 @@ function selectRelic(relic, scrollToTop = true) {
   // Load in 3D Viewer
   viewer.loadRelic(relic);
 
-  // Update active state in grid cards
+  // Update Active Highlights in Bottom Square Deck & Grid
   updateActiveCardHighlights();
 
   // Scroll to stage if requested
@@ -157,6 +194,119 @@ function selectRelic(relic, scrollToTop = true) {
     document.getElementById('hero-stage').scrollIntoView({ behavior: 'smooth' });
     vintageAudio.playRelicInspectSound();
   }
+}
+
+// Navigate Previous / Next Relic (Game-like Selection)
+function navigateRelic(direction) {
+  currentRelicIndex = (currentRelicIndex + direction + RELICS_DATA.length) % RELICS_DATA.length;
+  const nextRelic = RELICS_DATA[currentRelicIndex];
+  selectRelic(nextRelic, false);
+  vintageAudio.playBrassClick();
+}
+
+// Setup Navigation Arrows and Keyboard Listeners
+function setupNavigationArrows() {
+  if (navArrowPrev) {
+    navArrowPrev.addEventListener('click', () => navigateRelic(-1));
+  }
+  if (navArrowNext) {
+    navArrowNext.addEventListener('click', () => navigateRelic(1));
+  }
+
+  // Keyboard navigation: Left & Right arrow keys
+  window.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowLeft') {
+      navigateRelic(-1);
+    } else if (e.key === 'ArrowRight') {
+      navigateRelic(1);
+    }
+  });
+
+  // Carousel scroll buttons
+  if (deckScrollLeft) {
+    deckScrollLeft.addEventListener('click', () => {
+      squareRelicsDeck.parentElement.scrollBy({ left: -280, behavior: 'smooth' });
+      vintageAudio.playBrassClick();
+    });
+  }
+  if (deckScrollRight) {
+    deckScrollRight.addEventListener('click', () => {
+      squareRelicsDeck.parentElement.scrollBy({ left: 280, behavior: 'smooth' });
+      vintageAudio.playBrassClick();
+    });
+  }
+}
+
+// Render the Bottom Square Character Selection Deck
+function renderSquareDeck() {
+  if (!squareRelicsDeck) return;
+  squareRelicsDeck.innerHTML = '';
+
+  RELICS_DATA.forEach((relic, idx) => {
+    const isCurrent = currentActiveRelic && currentActiveRelic.id === relic.id;
+    const card = document.createElement('div');
+    card.className = `square-relic-card ${isCurrent ? 'active' : ''}`;
+    card.dataset.relicId = relic.id;
+    card.dataset.index = idx;
+    card.title = `Inspect ${relic.title} (${relic.fileSize})`;
+
+    const thumbUrl = new URL(relic.thumbnail, window.location.href).href;
+
+    card.innerHTML = `
+      <div class="square-card-frame">
+        <div class="square-card-img-box">
+          <img src="${thumbUrl}" alt="${relic.title}" class="square-card-img" loading="lazy">
+        </div>
+        <div class="square-card-rarity-pip" style="background: ${relic.rarityColor};" title="${relic.rarity}"></div>
+        <div class="square-card-meta">
+          <div class="square-card-name">${relic.title}</div>
+          <div class="square-card-size">
+            <span>${relic.categoryLabel.split(' ')[0]}</span>
+            <span>${relic.fileSize}</span>
+          </div>
+        </div>
+        <div class="square-active-indicator">ACTIVE</div>
+        <div class="sq-corner sq-tl"></div>
+        <div class="sq-corner sq-tr"></div>
+        <div class="sq-corner sq-bl"></div>
+        <div class="sq-corner sq-br"></div>
+      </div>
+    `;
+
+    card.addEventListener('click', () => {
+      selectRelic(relic, false);
+      vintageAudio.playRelicInspectSound();
+    });
+
+    squareRelicsDeck.appendChild(card);
+  });
+}
+
+// Update Active Card Highlights & Center in Carousel
+function updateActiveCardHighlights() {
+  // Update square deck
+  if (squareRelicsDeck) {
+    const squareCards = squareRelicsDeck.querySelectorAll('.square-relic-card');
+    squareCards.forEach(card => {
+      if (card.dataset.relicId === currentActiveRelic.id) {
+        card.classList.add('active');
+        // Smoothly center the active thumbnail in the bottom carousel
+        card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      } else {
+        card.classList.remove('active');
+      }
+    });
+  }
+
+  // Update Curio Cabinet grid
+  document.querySelectorAll('.relic-card').forEach(card => {
+    if (card.dataset.relicId === currentActiveRelic.id) {
+      card.classList.add('current-active');
+    } else {
+      card.classList.remove('current-active');
+    }
+  });
 }
 
 // Render Category Filter Pills
@@ -176,7 +326,7 @@ function renderFilterPills() {
   });
 }
 
-// Render Relics Grid Cards
+// Render Relics Grid Cards (Curio Cabinet) with Image Preview + Download Button
 function renderRelicsGrid() {
   relicsGrid.innerHTML = '';
 
@@ -207,7 +357,15 @@ function renderRelicsGrid() {
     card.className = `relic-card ${isCurrent ? 'current-active' : ''}`;
     card.dataset.relicId = relic.id;
 
+    const thumbUrl = new URL(relic.thumbnail, window.location.href).href;
+    const fileUrl = new URL(relic.file, window.location.href).href;
+
     card.innerHTML = `
+      <!-- Picture Preview Option -->
+      <div class="card-thumb-wrapper">
+        <img src="${thumbUrl}" alt="${relic.title}" class="card-thumb-img" loading="lazy">
+      </div>
+
       <div class="card-top-meta">
         <span class="card-category">${relic.categoryLabel}</span>
         <span class="card-rarity" style="color: ${relic.rarityColor}; border-color: ${relic.rarityColor};">${relic.rarity}</span>
@@ -223,10 +381,13 @@ function renderRelicsGrid() {
       </div>
 
       <div class="card-footer">
-        <button class="btn-inspect">
-          <span>Inspect in 3D</span>
+        <button class="btn-inspect" title="Inspect in 3D Viewport">
+          <span>Inspect 3D</span>
           <span>⚔️</span>
         </button>
+        <a class="btn-card-download" href="${fileUrl}" download="${relic.file}" title="Download .GLB Model (${relic.fileSize})">
+          <span>📥</span>
+        </a>
         <button class="btn-lore-modal" title="Read Historical Lore">📜</button>
       </div>
     `;
@@ -236,22 +397,15 @@ function renderRelicsGrid() {
       if (e.target.closest('.btn-lore-modal')) {
         e.stopPropagation();
         openLoreModal(relic);
+      } else if (e.target.closest('.btn-card-download')) {
+        e.stopPropagation();
+        vintageAudio.playParchmentSound();
       } else {
         selectRelic(relic, true);
       }
     });
 
     relicsGrid.appendChild(card);
-  });
-}
-
-function updateActiveCardHighlights() {
-  document.querySelectorAll('.relic-card').forEach(card => {
-    if (card.dataset.relicId === currentActiveRelic.id) {
-      card.classList.add('current-active');
-    } else {
-      card.classList.remove('current-active');
-    }
   });
 }
 
@@ -380,6 +534,12 @@ function openLoreModal(relic) {
     <p style="margin-bottom: 14px;"><strong>Material & Craft:</strong> ${relic.material}. Recovered from <em>${relic.origin}</em>, dating back to <em>${relic.era}</em>.</p>
     <p><strong>Physical Weight:</strong> ${relic.weight} • <strong>Archival Size:</strong> ${relic.fileSize}</p>
   `;
+
+  if (modalDownloadBtn) {
+    const fileUrl = new URL(relic.file, window.location.href).href;
+    modalDownloadBtn.href = fileUrl;
+    modalDownloadBtn.setAttribute('download', relic.file);
+  }
 
   loreModal.classList.add('open');
   vintageAudio.playParchmentSound();

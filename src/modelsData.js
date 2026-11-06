@@ -1,6 +1,7 @@
 export const RELICS_DATA = [
   {
     id: "warhammer-3626",
+    thumbnail: "thumbnails/warhammer-3626.png",
     file: "pixellabs-warhammer-3626.glb",
     title: "Ironbeard War Hammer",
     subtitle: "Forged in the Deep Subterranean Halls of Karak-Drak",
@@ -25,6 +26,7 @@ export const RELICS_DATA = [
   },
   {
     id: "potion-3620",
+    thumbnail: "thumbnails/potion-3620.png",
     file: "pixellabs-potion-3620.glb",
     title: "Phial of Celestial Elixir",
     subtitle: "Distilled Starlight & Powdered Moonstone Essence",
@@ -49,6 +51,7 @@ export const RELICS_DATA = [
   },
   {
     id: "viking-shield-4228",
+    thumbnail: "thumbnails/viking-shield-4228.png",
     file: "pixellabs-viking-shield-4228.glb",
     title: "Aegis of the Sea King",
     subtitle: "Round Wooden Buckler with Wrought Iron Boss",
@@ -73,6 +76,7 @@ export const RELICS_DATA = [
   },
   {
     id: "treasure-chest-4062",
+    thumbnail: "thumbnails/treasure-chest-4062.png",
     file: "pixellabs-treasure-chest-4062.glb",
     title: "The Gilded Corsair Chest",
     subtitle: "Iron-Strapped Spanish Oak Coffer",
@@ -97,6 +101,7 @@ export const RELICS_DATA = [
   },
   {
     id: "hand-axe-5177",
+    thumbnail: "thumbnails/hand-axe-5177.png",
     file: "u_s4pq0r7lrt-axe-5177.glb",
     title: "Forester's Cleaving Hatchet",
     subtitle: "Tempered Iron & Hickory Haft",
@@ -121,6 +126,7 @@ export const RELICS_DATA = [
   },
   {
     id: "data-matrix",
+    thumbnail: "thumbnails/data-matrix.png",
     file: "ai_data_model_interaction.glb",
     title: "The Chrono-Data Matrix",
     subtitle: "Abstract Geometrical Thought-Lattice",
@@ -145,6 +151,7 @@ export const RELICS_DATA = [
   },
   {
     id: "fantasy-weapon-3419",
+    thumbnail: "thumbnails/fantasy-weapon-3419.png",
     file: "pixellabs-fantasy-weapon-3419.glb",
     title: "Sunfire Relic Greatsword",
     subtitle: "Blessed Two-Handed Executioner's Blade",
@@ -169,6 +176,7 @@ export const RELICS_DATA = [
   },
   {
     id: "scroll-3468",
+    thumbnail: "thumbnails/scroll-3468.png",
     file: "pixellabs-scroll-3468.glb",
     title: "The Covenant Parchment Scroll",
     subtitle: "Inscribed with Elder Oaths & Arcane Theorems",
@@ -193,6 +201,7 @@ export const RELICS_DATA = [
   },
   {
     id: "dark-fantasy-3330",
+    thumbnail: "thumbnails/dark-fantasy-3330.png",
     file: "pixellabs-dark-fantasy-3330.glb",
     title: "Monolith of the Eclipse",
     subtitle: "Obsidian Dark Fantasy Relic",
@@ -217,6 +226,7 @@ export const RELICS_DATA = [
   },
   {
     id: "potion-bottle-3421",
+    thumbnail: "thumbnails/potion-bottle-3421.png",
     file: "pixellabs-potion-bottle-3421.glb",
     title: "Apothecary's Distillation Flask",
     subtitle: "Vintage Hand-Blown Green Glass Reagent",
@@ -241,6 +251,7 @@ export const RELICS_DATA = [
   },
   {
     id: "house-3623",
+    thumbnail: "thumbnails/house-3623.png",
     file: "pixellabs-house-3623.glb",
     title: "The Old Timber Apothecary",
     subtitle: "Tudor-style Half-Timbered Medieval Workshop",
@@ -265,6 +276,7 @@ export const RELICS_DATA = [
   },
   {
     id: "crystal-5564",
+    thumbnail: "thumbnails/crystal-5564.png",
     file: "aberrantrealities-crystal-5564.glb",
     title: "Prismatic Resonator Crystal",
     subtitle: "Raw Arcane Geode Cluster",
@@ -289,6 +301,7 @@ export const RELICS_DATA = [
   },
   {
     id: "glb-4061",
+    thumbnail: "thumbnails/glb-4061.png",
     file: "pixellabs-glb-4061.glb",
     title: "Reliquary Urn of the High Kings",
     subtitle: "Antique Embellished Bronze Coffer",
@@ -313,6 +326,7 @@ export const RELICS_DATA = [
   },
   {
     id: "bone-spear-3640",
+    thumbnail: "thumbnails/bone-spear-3640.png",
     file: "pixellabs-bone-spear-3640.glb",
     title: "Tribal Wyrm-Bone Pike",
     subtitle: "Fossilized Drake Rib & Leather Bindings",
@@ -337,6 +351,7 @@ export const RELICS_DATA = [
   },
   {
     id: "pickaxe-3560",
+    thumbnail: "thumbnails/pickaxe-3560.png",
     file: "pixellabs-pickaxe-3560.glb",
     title: "Deep-Delver's Mining Mattock",
     subtitle: "Hardened Pig Iron & Sturdy Mountain Ash",
@@ -361,6 +376,7 @@ export const RELICS_DATA = [
   },
   {
     id: "shrine-3763",
+    thumbnail: "thumbnails/shrine-3763.png",
     file: "pixellabs-shrine-3763.glb",
     title: "Sanctuary of the Moss-God",
     subtitle: "Carved Stone Wayside Altar",
@@ -385,6 +401,7 @@ export const RELICS_DATA = [
   },
   {
     id: "signpost-3561",
+    thumbnail: "thumbnails/signpost-3561.png",
     file: "pixellabs-fantasy-signpost-3561.glb",
     title: "Crossroads Signpost of Fate",
     subtitle: "Weathered Waymarker of the Old King's Highway",
@@ -409,6 +426,7 @@ export const RELICS_DATA = [
   },
   {
     id: "battle-axe-3881",
+    thumbnail: "thumbnails/battle-axe-3881.png",
     file: "pixellabs-battle-axe-3881.glb",
     title: "Berserker's Double-Bitted Labrys",
     subtitle: "Dual Crescent Steel Blades on Studded Shaft",
@@ -433,6 +451,7 @@ export const RELICS_DATA = [
   },
   {
     id: "glb-3822",
+    thumbnail: "thumbnails/glb-3822.png",
     file: "pixellabs-glb-3822.glb",
     title: "Trophy of the Dragon Slayer",
     subtitle: "Ancient Sculpted Curio Reliquary",
@@ -457,6 +476,7 @@ export const RELICS_DATA = [
   },
   {
     id: "glb-3404",
+    thumbnail: "thumbnails/glb-3404.png",
     file: "pixellabs-glb-3404.glb",
     title: "Chamberlain's Antique Lockbox",
     subtitle: "Engraved Brass Casket of State",
@@ -481,6 +501,7 @@ export const RELICS_DATA = [
   },
   {
     id: "wall-lantern-3348",
+    thumbnail: "thumbnails/wall-lantern-3348.png",
     file: "pixellabs-wall-lantern-3348.glb",
     title: "Night-Watchman's Wrought Lantern",
     subtitle: "Iron-Caged Whale-Oil Hearth Lamp",
@@ -505,6 +526,7 @@ export const RELICS_DATA = [
   },
   {
     id: "watchtower-3424",
+    thumbnail: "thumbnails/watchtower-3424.png",
     file: "pixellabs-watchtower-3424.glb",
     title: "The Bastion of the North",
     subtitle: "Fortified Stone Sentry Tower",
@@ -529,6 +551,7 @@ export const RELICS_DATA = [
   },
   {
     id: "house-3334",
+    thumbnail: "thumbnails/house-3334.png",
     file: "pixellabs-house-3334.glb",
     title: "The Boar's Head Tavern",
     subtitle: "Medieval Stone & Stucco Inn",
@@ -553,6 +576,7 @@ export const RELICS_DATA = [
   },
   {
     id: "fairy-house-3422",
+    thumbnail: "thumbnails/fairy-house-3422.png",
     file: "pixellabs-fairy-house-3422.glb",
     title: "The Enchanted Woodland Cottage",
     subtitle: "Mushroom-Cap Fae Homestead",
@@ -577,6 +601,7 @@ export const RELICS_DATA = [
   },
   {
     id: "skull-potion-3558",
+    thumbnail: "thumbnails/skull-potion-3558.png",
     file: "pixellabs-skull-potion-3558.glb",
     title: "Vial of the Pale Reaper",
     subtitle: "Cranium-Carved Toxicant Decanter",
@@ -601,6 +626,7 @@ export const RELICS_DATA = [
   },
   {
     id: "tiny-planet",
+    thumbnail: "thumbnails/tiny-planet.png",
     file: "tiny_planet_friends_3d-defective-product-4083.glb",
     title: "The Celestial Astrolabe Sphere",
     subtitle: "Miniature Micro-Cosmic Terrene",
@@ -626,9 +652,14 @@ export const RELICS_DATA = [
 ];
 
 export const CATEGORIES = [
-  { id: "all", label: "All Antiquities", count: 26, icon: "🏺" },
-  { id: "weapons", label: "Weapons & Armory", count: 8, icon: "⚔️" },
-  { id: "arcana", label: "Alchemy & Arcana", count: 5, icon: "🧪" },
-  { id: "architecture", label: "Architecture & Wonders", count: 6, icon: "🏰" },
-  { id: "curios", label: "Relics & Curios", count: 7, icon: "🗝️" },
+  { id: "all",
+    thumbnail: "thumbnails/all.png", label: "All Antiquities", count: 26, icon: "🏺" },
+  { id: "weapons",
+    thumbnail: "thumbnails/weapons.png", label: "Weapons & Armory", count: 8, icon: "⚔️" },
+  { id: "arcana",
+    thumbnail: "thumbnails/arcana.png", label: "Alchemy & Arcana", count: 5, icon: "🧪" },
+  { id: "architecture",
+    thumbnail: "thumbnails/architecture.png", label: "Architecture & Wonders", count: 6, icon: "🏰" },
+  { id: "curios",
+    thumbnail: "thumbnails/curios.png", label: "Relics & Curios", count: 7, icon: "🗝️" },
 ];
