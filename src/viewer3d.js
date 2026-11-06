@@ -371,6 +371,24 @@ export class Reliquary3DViewer {
     this.currentModel = wrapper;
     this.scene.add(this.currentModel);
 
+    // RPG-style smooth game selection entrance pop-in
+    wrapper.scale.set(0.1, 0.1, 0.1);
+    const animStart = performance.now();
+    const animatePop = (now) => {
+      const progress = Math.min((now - animStart) / 320, 1);
+      // Ease out cubic
+      const ease = 1 - Math.pow(1 - progress, 3);
+      if (this.currentModel === wrapper) {
+        wrapper.scale.set(ease, ease, ease);
+        if (progress < 1) {
+          requestAnimationFrame(animatePop);
+        } else {
+          wrapper.scale.set(1, 1, 1);
+        }
+      }
+    };
+    requestAnimationFrame(animatePop);
+
     // Auto-fit camera framing
     const maxDim = Math.max(size.x, size.y, size.z);
     const fov = this.camera.fov * (Math.PI / 180);

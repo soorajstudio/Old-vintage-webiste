@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Thumbnail Renderer</title>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/examples/jsm/loaders/GLTFLoader.js": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js"
+    }
+  }
+  </script>
+  <style>
+    body { margin: 0; background: #140e0b; overflow: hidden; }
+    canvas { width: 320px; height: 320px; }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+    const width = 320;
+    const height = 320;
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x1a120e);
+
+    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+    camera.position.set(2, 1.5, 2.5);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(1);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.3;
+    document.getElementById('container').appendChild(renderer.domElement);
+
+    // Lighting
+    const amb = new THREE.AmbientLight(0xffeedd, 1.2);
+    scene.add(amb);
+
+    const key = new THREE.DirectionalLight(0xffd79e, 2.8);
+    key.position.set(3, 5, 4);
+    scene.add(key);
+
+    const fill = new THREE.DirectionalLight(0x7da5d8, 1.0);
+    fill.position.set(-3, 2, -2);
+    scene.add(fill);
+
+    const rim = new THREE.DirectionalLight(0xc5a059, 1.8);
+    rim.position.set(0, -2, -3);
+    scene.add(rim);
+
+    // Subtle dark circular platform
+    const dias = new THREE.Mesh(
+      new THREE.CylinderGeometry(1.2, 1.3, 0.08, 32),
+      new THREE.MeshStandardMaterial({ color: 0x120d0a, roughness: 0.8, metalness: 0.2 })
+    );
+    dias.position.y = -0.54;
+    scene.add(dias);
+
+    const diasRim = new THREE.Mesh(
+      new THREE.TorusGeometry(1.22, 0.02, 16, 48),
+      new THREE.MeshStandardMaterial({ color: 0xc5a059, roughness: 0.4, metalness: 0.8 })
+    );
+    diasRim.rotateX(Math.PI / 2);
+    diasRim.position.y = -0.5;
+    scene.add(diasRim);
+
+    const loader = new GLTFLoader();
+    let currentModel = null;
+
+    window.renderModelThumbnail = function(file) {
+      return new Promise((resolve, reject) => {
+        if (currentModel) {
+          scene.remove(currentModel);
+          currentModel = null;
+        }
+
+        const url = `/${encodeURIComponent(file)}`;
+        loader.load(
+          url,
+          (gltf) => {
+            const model = gltf.scene;
+            currentModel = model;
+
+            // Compute bounds and center
+            const box = new THREE.Box3().setFromObject(model);
+            const size = new THREE.Vector3();
+            box.getSize(size);
+            const center = new THREE.Vector3();
+            box.getCenter(center);
+
+            model.position.x = -center.x;
+            model.position.y = -box.min.y - 0.5;
+            model.position.z = -center.z;
+            model.rotation.y = 0.45; // slight dynamic angle
+
+            scene.add(model);
+
+            // Auto fit camera
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const fov = camera.fov * (Math.PI / 180);
+            const dist = Math.max((maxDim / 2) / Math.tan(fov / 2) * 1.5, 1.2);
+
+            camera.position.set(dist * 0.75, dist * 0.45, dist * 0.95);
+            camera.lookAt(0, (size.y * 0.35) - 0.25, 0);
+
+            // Render
+            renderer.render(scene, camera);
+            const dataUrl = renderer.domElement.toDataURL('image/png');
+            resolve(dataUrl);
+          },
+          undefined,
+          (err) => {
+            console.error('Error loading model in thumb renderer:', err);
+            reject(err);
+          }
+        );
+      });
+    };
+  </script>
+</body>
+</html>
