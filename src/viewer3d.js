@@ -289,7 +289,8 @@ export class Reliquary3DViewer {
       this.currentModel = null;
     }
 
-    const url = `./${encodeURIComponent(modelData.file)}`;
+    // Resolve absolute URL relative to current location (works seamlessly on GitHub Pages subpaths)
+    const url = new URL(modelData.file, window.location.href).href;
 
     // Check cache
     if (this.cache.has(modelData.file)) {
