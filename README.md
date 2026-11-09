@@ -1,91 +1,90 @@
-<div align="center">
+# Old-vintage-webiste
 
-# 🛡️ THE CHRONICLES OF ELDORIA
-### *Vintage 3D Reliquary & Curio Cabinet*
+<p align="center">
+  <img src="https://img.shields.io/badge/Three.js-WebGL-black?style=flat-square&logo=threedotjs" alt="Three.js" />
+  <img src="https://img.shields.io/badge/3D%20Models-26%20Artifacts-38bdf8?style=flat-square" alt="3D Models" />
+  <img src="https://img.shields.io/badge/Vite-6-purple?style=flat-square&logo=vite" alt="Vite" />
+  <img src="https://img.shields.io/badge/Audio-Web%20Audio%20API-orange?style=flat-square" alt="Web Audio" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="License" />
+</p>
 
-An interactive dark-fantasy 3D showcase exhibiting **26 authentic medieval antiquities, armaments, and architectural relics** with RPG-style character selection, direct 3D model downloads, and procedural audio.
-
-[![Live Demo](https://img.shields.io/badge/Demo-Live%20on%20GitHub%20Pages-c5a059?style=for-the-badge&logo=github)](https://soorajstudio.github.io/Old-vintage-webiste/)
-[![Three.js](https://img.shields.io/badge/Three.js-v0.170.0-black?style=for-the-badge&logo=three.js)](https://threejs.org/)
-[![Models](https://img.shields.io/badge/3D%20Models-26%20Artifacts%20(.GLB)-38bdf8?style=for-the-badge)](https://github.com/soorajstudio/Old-vintage-webiste)
-[![License](https://img.shields.io/badge/License-MIT-10b981?style=for-the-badge)](./LICENSE)
-
-### **[👉 Launch Live 3D Reliquary Demo](https://soorajstudio.github.io/Old-vintage-webiste/)**
+An interactive dark-fantasy 3D showcase exhibiting **26 authentic medieval antiquities, armaments, and architectural relics** with RPG-style selection deck, direct 3D model downloads, customizable lighting shaders, and procedural ambient audio.
 
 ---
 
-</div>
+## 📸 Hero Preview
 
-## 📸 Preview
+<p align="center">
+  <img src="docs/screenshots/vintage-hero.png" width="100%" alt="Vintage 3D Reliquary Hero Showcase" />
+</p>
 
-<div align="center">
-  <img src="screenshots/hero-showcase.png" alt="Hero 3D Chamber & Character Select" width="100%" style="border-radius: 8px; border: 2px solid #c5a059;">
-</div>
+## 🖼️ UI Snapshot Gallery
 
-<br>
-
-<div align="center">
-  <img src="screenshots/bottom-selection-deck.png" width="49%" alt="Character Selection Deck" style="border-radius: 6px; border: 1px solid #c5a059;">
-  <img src="screenshots/alchemist-forge.png" width="49%" alt="Alchemist's Forge Studio" style="border-radius: 6px; border: 1px solid #c5a059;">
-</div>
-
----
-
-## ✨ Features
-
-- **🎮 Game-Style Selection**: Switch between 26 3D relics using on-screen brass chevrons (`‹ PREV` / `NEXT ›`) or keyboard arrow keys (`←` / `→`).
-- **🎴 Square Preview Deck**: Bottom carousel with pre-rendered 3D thumbnail cards, active gold highlights, and auto-centering scroll.
-- **📥 Direct 3D Model Downloads**: One-click binary `.glb` downloads from the Codex sidebar, catalog cards, or lore modals.
-- **📜 Curator's Codex**: Historical lore, discovered origin, weight, material composition, and dynamic RPG combat/arcana stats.
-- **⚒️ Alchemist's Forge**: Interactively tweak surface patina/roughness, wireframe mode, and elemental color infusions in real time.
-- **💡 4 Lighting Shaders**: Hearthfire (warm candlelight), Moonlit Crypt, Arcane Resonator, and Sunlit Antiquarium.
-- **🎧 Procedural Soundscape**: Zero-download ambient fireplace crackles, drone, and tactile brass clicks synthesized via Web Audio API.
-
----
-
-## 🏺 The Relic Collection (26 Models)
-
-- ⚔️ **Weapons & Armory**: Dwarven War Hammer, Berserker Labrys, Sunfire Greatsword, Viking Shield, Wyrm-Bone Pike, Cleaving Hatchet, Mining Mattock.
-- 🧪 **Alchemy & Arcana**: Celestial Elixir, Apothecary Flask, Pale Reaper Skull Decanter, Resonator Crystal, Covenant Parchment Scroll.
-- 🏰 **Architecture & Landmarks**: Bastion Watchtower, Enchanted Fairy Cottage, Boar's Head Tavern, Timber Workshop, Moss Shrine, Crossroads Signpost.
-- 🗝️ **Relics & Curios**: Gilded Corsair Chest, Wrought Iron Lantern, High Kings' Urn, Astrolabe Sphere, Chrono-Data Matrix.
-
----
-
-## 🚀 Quick Start
-
-### 1. Windows (One-Click)
-Double-click [**`start-website.bat`**](./start-website.bat) to launch the server and open the site in your default browser.
-
-### 2. Node.js & Vite Dev Server
-```bash
-git clone https://github.com/soorajstudio/Old-vintage-webiste.git
-cd Old-vintage-webiste
-npm install
-npm run dev
-```
-Open **`http://localhost:5174/`**.
-
-### 3. Zero-Build Static / GitHub Pages
-Runs natively in any browser with **no build step** via W3C Import Maps:
-```bash
-python -m http.server 8080
-```
-Or host directly on **GitHub Pages** (Settings > Pages > Source: `Deploy from a branch` > `main` / `root`).
+<p align="center">
+  <img src="docs/screenshots/vintage-deck.png" width="49%" alt="Relic Selection Deck" />
+  <img src="docs/screenshots/vintage-forge.png" width="49%" alt="Alchemist's Forge Studio" />
+</p>
+<p align="center">
+  <img src="docs/screenshots/vintage-cabinet.png" width="99%" alt="Curio Cabinet Relic Grid" />
+</p>
 
 ---
 
 ## 🎮 Controls
 
-| Input | Action |
-| :--- | :--- |
-| **`←` / `→` Arrow Keys** | Navigate to previous / next antiquity |
-| **Left Click + Drag** | Orbit and rotate the 3D model 360° |
-| **Scroll Wheel / Pinch** | Zoom in / out (auto-bounded) |
-| **Right Click + Drag** | Pan camera position |
+| Action | Control | Description |
+|---|---|---|
+| **Orbit / Rotate** | `Left Click + Drag` | Full 360° inspection around the active relic |
+| **Pan Camera** | `Right Click + Drag` | Translate viewport position |
+| **Zoom** | `Mouse Wheel` | Smooth perspective zoom in / out |
+| **Switch Relics** | `←` / `→` or On-screen Chevrons | Cycle through the 26 antiquity artifacts |
+| **Alchemist's Forge** | Click `Forge` tab | Tweak surface roughness, wireframe, and tints |
 
 ---
 
-## 📜 License
+## ✨ Features
 
-[MIT License](./LICENSE) • 3D models courtesy of PixelLabs, Aberrant Realities, and Tripo for archival study.
+- 🛡️ **26 Detailed 3D Antiques** - Battle axes, bone spears, viking shields, potions, shrines, lanterns, and medieval dwellings.
+- 🎴 **Bottom Relic Deck** - Carousel with 3D thumbnail previews, active highlights, and auto-centering scroll.
+- 📥 **Direct Binary Downloads** - Instant 1-click `.glb` 3D model downloads for 3D printing or game development.
+- 📜 **Curator's Codex** - Discover origin lore, physical mass, material composition, and dynamic RPG combat stats.
+- ⚒️ **Alchemist's Forge** - Live material shaders, procedural wireframe toggles, and elemental color infusions.
+- 💡 **4 Dynamic Lighting Presets** - Hearthfire (candlelight), Moonlit Crypt, Arcane Resonator, and Sunlit Antiquarium.
+- 🎧 **Procedural Soundscape** - Synthesized crackling hearthfire ambience and tactile brass clicks via Web Audio API.
+
+---
+
+## 🛠️ Tech Stack
+
+- **3D Engine**: Three.js (GLTFLoader, OrbitControls)
+- **Tooling & Bundler**: Vite
+- **Audio Engine**: Web Audio API (Procedural noise & sound synthesis)
+- **Styling**: Custom Medieval Brass & Leather CSS theme
+
+---
+
+## 🚀 Quick Start
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/soorajstudio/Old-vintage-webiste.git
+cd Old-vintage-webiste
+```
+
+### 2. Install dependencies & run development server
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+> **Windows One-Click**: You can also double-click `start-website.bat` to launch immediately.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+Developed with ❤️ by [Sooraj Studio](https://github.com/soorajstudio).
